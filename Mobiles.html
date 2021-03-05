@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Metodos</title>
+    <meta charset="UTF-8">
+    <!-- versión de producción, optimizada para tamaño y velocidad -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+    <div id="aplicacion">
+        <h1>Programa para sacar Precios de equipos AT&T </h1>
+        Precio de Venta en $: <br>
+        <input type="text" v-model.number="A" type="number" step="1">
+        <br>
+        Precio de Costo en $: <br>
+        <input type="text" v-model.number="B" type="number" step="1">
+        <br>
+        <h2> Ganancia =  {{ ganancias() }} </h2> 
+        <h2> %Samuel =  {{ samuel() }} </h2> 
+    </div>
+    <script type="text/javascript">
+        new Vue({
+            el:"#aplicacion",
+            data:{
+               A:0,
+               B:0,
+            },
+            methods: {
+                suma:function(){
+                    return "A+B es:"+(this.A+this.B);
+                },
+                ganancias:function(){
+                    ganancia= this.A - this.B;
+                    return ganancia;
+                },
+                samuel:function(){
+                    return (ganancia*1.20)-ganancia;
+                },
+            },
+        });
+    </script>
+
+
+</body>
+
+</html>
