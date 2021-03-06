@@ -5,19 +5,60 @@
     <meta charset="UTF-8">
     <!-- versión de producción, optimizada para tamaño y velocidad -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+ 
 </head>
 <body>
 
     <div id="aplicacion">
-        <h1>Programa para sacar Precios de equipos AT&T </h1>
-        Precio de Venta en $: <br>
-        <input type="text" v-model.number="A" type="number" step="1">
+        <section class="hero is-info">
+            <div class="hero-body">
+              <p class="title">
+                Programa para sacar Precios de equipos AT&T
+              </p>
+              <br></br>
+              <p class="subtitle">
+                  Precio Total del Equipo en $:
+                  <input class="input is-primary" v-model.number="A" type="number" step="1" placeholder="Precio del Equipo" style="width: 200px;">
+              </p>
+              <p class="subtitle">
+                Precio del Descuento en $:
+                <input class="input is-primary" v-model.number="B" type="number" step="1" style="width: 200px;">
+                TRADE IN
+            </p>
+            <p class="subtitle">
+                Seleccione el Plan
+            </p>
+            <div class="select">
+                <select  v-model="selected">
+                    <option disabled value="">Selecciona el Plan</option>
+                    <option>Starter</option>
+                    <option>Extra</option>
+                    <option>Elite</option>
+                </select>
+            </div>
+            </div>
+          </section>
+
         <br>
-        Precio de Costo en $: <br>
-        <input type="text" v-model.number="B" type="number" step="1">
-        <br>
-        <h2> Ganancia =  {{ ganancias() }} </h2> 
-        <h2> %Samuel =  {{ samuel() }} </h2> 
+        
+
+        <section class="hero is-link">
+            <div class="hero-body">
+              <p class="title">
+                Unlimited Your Way
+              </p>
+              <p class="subtitle">
+                <h2> Primer Bills: =  {{ PrimerBills() }} $</h2> 
+                <h2> Segundo Bills: =  {{ SegundoBills() }} $ </h2>
+                <h2> Tercer Bills: =  {{ TercerBills() }} $ </h2>
+               
+            <span>Seleccionado: {{ selected }}</span>
+                </p>
+            </div>
+        </section>
+
     </div>
     <script type="text/javascript">
         new Vue({
@@ -25,17 +66,40 @@
             data:{
                A:0,
                B:0,
+               selected:'',
+               plan:0,
+               segundo:0,
+               activacion:30,
             },
             methods: {
-                suma:function(){
-                    return "A+B es:"+(this.A+this.B);
+                resta:function(){
+                    return (this.A-this.B);
                 },
-                ganancias:function(){
-                    ganancia= this.A - this.B;
-                    return ganancia;
+                PrimerBills:function(){
+                    primero= this.A / 30;
+                    if (this.selected=="Starter") {
+                        this.plan= 75;
+                        this.segundo= 65;
+
+                    }
+                    else if (this.selected=="Extra") {
+                        this.plan= 85;
+                        this.segundo= 75;
+
+                    }
+                    if (this.selected=="Elite") {
+                        this.plan= 95;
+                        this.segundo= 85;
+
+                    }
+                    return primero + this.plan+this.activacion;
                 },
-                samuel:function(){
-                    return (ganancia*1.20)-ganancia;
+                SegundoBills:function(){
+                    return primero+ this.plan;
+                },
+                TercerBills:function(){
+                    descuento=(this.A-this.B)/30;
+                    return descuento + this.segundo;
                 },
             },
         });
